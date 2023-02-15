@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500;600;700&display=swap");
+
+body {
+  font-family: Montserrat;
+  min-width: 330px;
+}
+
+svg.fa-cat * {
+  fill: url(#lgrad);
+}
