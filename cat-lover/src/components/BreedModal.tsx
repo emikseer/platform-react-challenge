@@ -1,16 +1,19 @@
-import { faCat, faHeartCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCat,
+  faCircleNotch,
+  faHeartCirclePlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useCatsContext } from "../providers/CatsContextProvider";
 import { catAPI } from "../api/catAPI";
-import { Cat } from "../types/types";
+import { Breed, Cat } from "../types/types";
 
 export const BreedModal = () => {
   const { id } = useParams();
   const { breedsData } = useCatsContext();
-  let breed = breedsData.find((cat) => cat.id === id);
-  const [currentBreed, setCurrentBreed] = useState(breed);
+  const [currentBreed, setCurrentBreed] = useState<Breed | null>(null);
   const [breedCats, setBreedCats] = useState<Cat[]>([]);
   const [isCatsLoading, setIsCatsLoading] = useState(false);
 
@@ -48,20 +51,27 @@ export const BreedModal = () => {
           </div>
         </div>
 
-        <div className="px-10 py-5 text-gray-600 flex">
-          {breedCats.map((breedCat) => (
-            <Link
-              to={`/image/${breedCat.id}`}
-              key={breedCat.id}
-              className="w-1/3 mx-2"
-            >
-              <img
-                src={breedCat.url}
-                className="rounded-md h-40 object-cover object-top"
-                alt="cat"
-              />
-            </Link>
-          ))}
+        <div className="px-10 py-5 text-gray-600 flex justify-center">
+          {isCatsLoading ? (
+            <FontAwesomeIcon
+              icon={faCircleNotch}
+              className="fa-spin text-5xl"
+            />
+          ) : (
+            breedCats.map((breedCat) => (
+              <Link
+                to={`/image/${breedCat.id}`}
+                key={breedCat.id}
+                className="w-1/3 mx-2"
+              >
+                <img
+                  src={breedCat.url}
+                  className="rounded-md h-40 object-cover object-top"
+                  alt="cat"
+                />
+              </Link>
+            ))
+          )}
         </div>
 
         {currentBreed.breeds && currentBreed.breeds.length > 0 && (

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faArrowRightLong,
   faArrowTurnDown,
-  faCat,
   faCircleNotch,
 } from "@fortawesome/free-solid-svg-icons";
 import { catAPI } from "../api/catAPI";
@@ -21,7 +19,7 @@ function Images() {
     catAPI.getCats().then(updateCatsList);
   };
 
-  const updateCatsList = (data: any[]) => {
+  const updateCatsList = (data: Cat[]) => {
     setCatsData([...catsData, ...data]);
     setLoading(false);
   };

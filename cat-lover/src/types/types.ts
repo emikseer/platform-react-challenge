@@ -1,9 +1,10 @@
 export type Cat = {
   id: string;
-  breeds: [];
+  breeds?: [];
   url: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
+  image?: { id: string; url: string };
 };
 
 export type Breed = { name: string; id: string; [key: string]: any };

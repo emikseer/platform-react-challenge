@@ -9,6 +9,7 @@ import { CatsContextProvider } from "./providers/CatsContextProvider";
 import Images from "./components/Images";
 import Breeds from "./components/Breeds";
 import { BreedModal } from "./components/BreedModal";
+import Favourites from "./components/Favourites";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/favourites",
-        element: <Images />,
+        element: <Favourites />,
       },
     ],
   },

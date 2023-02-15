@@ -43,4 +43,22 @@ export const catAPI = {
 
     return response.data;
   },
+
+  removeCatFromFavourite: async function (id: string) {
+    const response = await api.delete(`/favourites/${id}`);
+
+    return response.data;
+  },
+
+  getFavouritesCats: async function (): Promise<Cat[]> {
+    const response = await api.request<Cat[]>({
+      url: `/favourites`,
+      method: "GET",
+    });
+
+    return response.data.map((data) => ({
+      url: data.image ? data.image.url : "",
+      id: data.id,
+    }));
+  },
 };

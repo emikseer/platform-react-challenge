@@ -5,29 +5,31 @@ import { catAPI } from "../api/catAPI";
 import { Outlet } from "react-router-dom";
 import { useCatsContext } from "../providers/CatsContextProvider";
 import { Card } from "./Card";
-import { Breed } from "../types/types";
+import { Cat } from "../types/types";
 
-function Breeds() {
-  const { breedsData, setBreedsData } = useCatsContext();
+function Favourites() {
+  const { favouriteCats, setFavouriteCats } = useCatsContext();
   const [loading, setLoading] = useState(false);
-  const fetchBreeds = () => {
+  const fetchFavouritesCats = () => {
     setLoading(true);
 
-    catAPI.getBreeds().then(updateBreedsList);
+    catAPI.getFavouritesCats().then(updateCatsList);
   };
 
-  const updateBreedsList = (data: Breed[]) => {
-    setBreedsData(data);
+  const updateCatsList = (data: Cat[]) => {
+    setFavouriteCats(data);
     setLoading(false);
   };
 
   useEffect(() => {
-    if (breedsData.length > 0) {
-      return;
-    }
-
-    fetchBreeds();
+    fetchFavouritesCats();
   }, []);
+
+  const removeFavouriteCat = (id: string) => {
+    setLoading(true);
+
+    catAPI.removeCatFromFavourite(id).then(() => fetchFavouritesCats());
+  };
 
   return (
     <>
@@ -37,8 +39,13 @@ function Breeds() {
         </div>
       ) : (
         <section className="px-10 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-5 py-6 font-medium mt-10">
-          {breedsData.map((breed: Breed) => (
-            <Card item={breed} title={breed.name} key={breed.id} />
+          {favouriteCats.map((cat: Cat) => (
+            <Card
+              item={cat}
+              key={cat.id}
+              removeFavourite={true}
+              onRemoveItem={(id: string) => removeFavouriteCat(id)}
+            />
           ))}
         </section>
       )}
@@ -47,4 +54,4 @@ function Breeds() {
   );
 }
 
-export default Breeds;
+export default Favourites;
