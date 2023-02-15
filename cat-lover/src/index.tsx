@@ -6,6 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Modal } from "./components/Modal";
 import { CatsContextProvider } from "./providers/CatsContextProvider";
+import Images from "./components/Images";
+import Breeds from "./components/Breeds";
 
 const router = createBrowserRouter([
   {
@@ -13,8 +15,22 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/image/:id",
-        element: <Modal />,
+        path: "/",
+        element: <Images />,
+        children: [
+          {
+            path: "/image/:id",
+            element: <Modal />,
+          },
+        ],
+      },
+      {
+        path: "/breeds",
+        element: <Breeds />,
+      },
+      {
+        path: "/favourites",
+        element: <Images />,
       },
     ],
   },

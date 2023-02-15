@@ -1,25 +1,20 @@
 import React, { createContext, useContext, useState } from "react";
-
-export type Cat = {
-  id: string;
-  breeds: { [key: string]: any }[];
-  url: string;
-  width: number;
-  height: number;
-};
+import { Breed, Cat } from "../types/types";
 
 const CatsContext = createContext<{
   catsData: Cat[];
   setCatsData: React.Dispatch<React.SetStateAction<Cat[]>>;
-  favouritesCats: Cat[];
-  setFavouritesCats: React.Dispatch<React.SetStateAction<Cat[]>>;
-  removeCatFromFavourites: (catId: string) => void;
+  favouriteCats: Cat[];
+  setFavouriteCats: React.Dispatch<React.SetStateAction<Cat[]>>;
+  breedsData: Breed[];
+  setBreedsData: React.Dispatch<React.SetStateAction<Breed[]>>;
 }>({
   catsData: [],
   setCatsData: () => {},
-  favouritesCats: [],
-  setFavouritesCats: () => {},
-  removeCatFromFavourites: () => {},
+  favouriteCats: [],
+  setFavouriteCats: () => {},
+  breedsData: [],
+  setBreedsData: () => {},
 });
 
 export const useCatsContext = () => {
@@ -28,20 +23,18 @@ export const useCatsContext = () => {
 
 export const CatsContextProvider = ({ children }: React.PropsWithChildren) => {
   const [catsData, setCatsData] = useState<Cat[]>([]);
-  const [favouritesCats, setFavouritesCats] = useState<Cat[]>([]);
-
-  const removeCatFromFavourites = (catID: string) => {
-    setFavouritesCats(favouritesCats.filter((cat) => cat.id !== catID));
-  };
+  const [favouriteCats, setFavouriteCats] = useState<Cat[]>([]);
+  const [breedsData, setBreedsData] = useState<Breed[]>([]);
 
   return (
     <CatsContext.Provider
       value={{
         catsData,
         setCatsData,
-        favouritesCats,
-        setFavouritesCats,
-        removeCatFromFavourites,
+        breedsData,
+        setBreedsData,
+        favouriteCats,
+        setFavouriteCats,
       }}
     >
       {children}
