@@ -8,7 +8,6 @@ export const api = axios.create({
   },
 });
 
-// defining a custom error handler for all APIs
 const errorHandler = (error: any) => {
   const statusCode = error.response?.status;
 

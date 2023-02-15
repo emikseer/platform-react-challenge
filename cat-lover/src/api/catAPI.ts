@@ -29,6 +29,15 @@ export const catAPI = {
     return response.data;
   },
 
+  getImagesFromBreed: async function (id: string): Promise<Cat[]> {
+    const response = await api.request<Cat[]>({
+      url: `/images/search?breed_ids=${id}&limit=3`,
+      method: "GET",
+    });
+
+    return response.data;
+  },
+
   addCatToFavourite: async function (id: string): Promise<Cat> {
     const response = await api.post<Cat>(`/favourites`, { image_id: id });
 

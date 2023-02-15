@@ -4,10 +4,11 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Modal } from "./components/Modal";
+import { CatModal } from "./components/CatModal";
 import { CatsContextProvider } from "./providers/CatsContextProvider";
 import Images from "./components/Images";
 import Breeds from "./components/Breeds";
+import { BreedModal } from "./components/BreedModal";
 
 const router = createBrowserRouter([
   {
@@ -20,13 +21,19 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/image/:id",
-            element: <Modal />,
+            element: <CatModal />,
           },
         ],
       },
       {
         path: "/breeds",
         element: <Breeds />,
+        children: [
+          {
+            path: "/breeds/image/:id",
+            element: <BreedModal />,
+          },
+        ],
       },
       {
         path: "/favourites",

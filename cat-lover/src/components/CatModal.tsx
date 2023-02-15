@@ -1,17 +1,12 @@
-import {
-  faCat,
-  faCircleNotch,
-  faExclamationTriangle,
-  faHeartCircleMinus,
-  faHeartCirclePlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCat, faHeartCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useCatsContext } from "../providers/CatsContextProvider";
 import { catAPI } from "../api/catAPI";
+import { Breed } from "../types/types";
 
-export const Modal = () => {
+export const CatModal = () => {
   const { id } = useParams();
   const { catsData } = useCatsContext();
   let cat = catsData.find((cat) => cat.id === id);
@@ -66,13 +61,14 @@ export const Modal = () => {
         {currentCat.breeds && currentCat.breeds.length > 0 && (
           <div className="px-10 py-5 text-gray-600">
             Breeds:{" "}
-            {currentCat.breeds.map((breed: { [key: string]: any }) => (
-              <span
+            {currentCat.breeds.map((breed: Breed) => (
+              <Link
+                to={`/breeds/image/${breed.id}`}
                 key={breed.id}
                 className="px-4 py-2 text-base rounded-full text-white bg-cyan-500"
               >
                 {breed.name}
-              </span>
+              </Link>
             ))}
           </div>
         )}

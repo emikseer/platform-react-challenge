@@ -31,20 +31,17 @@ function Breeds() {
 
   return (
     <>
-      <section className="px-10 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-5 py-6 font-medium mt-10">
-        {loading ? (
-          <div className="flex justify-center py-36 mx-10">
-            <FontAwesomeIcon
-              icon={faCircleNotch}
-              className="fa-spin text-5xl"
-            />
-          </div>
-        ) : (
-          breedsData.map((breed: Breed) => (
+      {loading ? (
+        <div className="flex justify-center py-36 mx-10">
+          <FontAwesomeIcon icon={faCircleNotch} className="fa-spin text-5xl" />
+        </div>
+      ) : (
+        <section className="px-10 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-5 py-6 font-medium mt-10">
+          {breedsData.map((breed: Breed) => (
             <Card item={breed} title={breed.name} key={breed.id} />
-          ))
-        )}
-      </section>
+          ))}
+        </section>
+      )}
       <Outlet />
     </>
   );
