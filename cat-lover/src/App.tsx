@@ -17,8 +17,8 @@ function App() {
               Lover
             </h1>
           </div>
-          <div className="flex justify-center">
-            <div className="inline-flex justify-center  rounded-lg border border-gray-100 bg-gray-100 p-2">
+          <div className="md:flex md:justify-center px-10">
+            <div className="flex flex-col md:flex-row md:inline-flex justify-center rounded-lg border border-gray-100 bg-gray-100 p-2">
               <NavLink
                 to="/"
                 className={({ isActive }) =>
