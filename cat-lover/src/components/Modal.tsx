@@ -2,6 +2,7 @@ import {
   faCat,
   faCircleNotch,
   faExclamationTriangle,
+  faHeartCircleMinus,
   faHeartCirclePlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,8 +12,16 @@ import { useCatsContext } from "../providers/CatsContextProvider";
 
 export const Modal = () => {
   const { id } = useParams();
-  const { catsData } = useCatsContext();
+  const {
+    catsData,
+    favouritesCats,
+    setFavouritesCats,
+    removeCatFromFavourites,
+  } = useCatsContext();
   const cat = catsData.find((cat) => cat.id === id);
+
+  const isFavourite = !!favouritesCats.find((favCat) => favCat.id === id);
+  console.log(favouritesCats, isFavourite);
 
   return cat ? (
     <div className="fixed w-full h-full bg-black bg-opacity-70 top-0 left-0 z-10 flex items-center justify-center overflow-hidden">
@@ -20,17 +29,36 @@ export const Modal = () => {
         <div className="flex justify-between items-center border-b border-gray-100 px-5 py-4">
           <div>
             <i className="fa fa-exclamation-triangle text-orange-500"></i>
-            <FontAwesomeIcon icon={faCat} className="text-orange-500 mr-3" />
+            <FontAwesomeIcon
+              icon={faCat}
+              className="text-orange-500 mr-3 text-2xl"
+            />
             <span className="font-bold text-gray-700 text-lg">Cat details</span>
           </div>
           <div>
-            <button className="text-sm items-center flex rounded-md bg-gray-100 p-2">
-              <FontAwesomeIcon
-                icon={faHeartCirclePlus}
-                className="text-red-600 text-2xl mr-2"
-              />
-              Add to favourite
-            </button>
+            {isFavourite ? (
+              <button
+                className="text-sm items-center flex rounded-md bg-gray-100 p-2"
+                onClick={() => removeCatFromFavourites(cat.id)}
+              >
+                <FontAwesomeIcon
+                  icon={faHeartCircleMinus}
+                  className="text-blue-600 text-2xl mr-2"
+                />
+                Remove from favourite
+              </button>
+            ) : (
+              <button
+                className="text-sm items-center flex rounded-md bg-gray-100 p-2"
+                onClick={() => setFavouritesCats([...favouritesCats, cat])}
+              >
+                <FontAwesomeIcon
+                  icon={faHeartCirclePlus}
+                  className="text-red-600 text-2xl mr-2"
+                />
+                Add to favourite
+              </button>
+            )}
           </div>
         </div>
 
@@ -46,7 +74,10 @@ export const Modal = () => {
           <div className="px-10 py-5 text-gray-600">
             Breeds:{" "}
             {cat.breeds.map((breed: { [key: string]: any }) => (
-              <span className="px-4 py-2 text-base rounded-full text-white bg-cyan-500">
+              <span
+                key={breed.id}
+                className="px-4 py-2 text-base rounded-full text-white bg-cyan-500"
+              >
                 {breed.name}
               </span>
             ))}

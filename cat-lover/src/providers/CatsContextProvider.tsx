@@ -11,7 +11,16 @@ export type Cat = {
 const CatsContext = createContext<{
   catsData: Cat[];
   setCatsData: React.Dispatch<React.SetStateAction<Cat[]>>;
-}>({ catsData: [], setCatsData: () => {} });
+  favouritesCats: Cat[];
+  setFavouritesCats: React.Dispatch<React.SetStateAction<Cat[]>>;
+  removeCatFromFavourites: (catId: string) => void;
+}>({
+  catsData: [],
+  setCatsData: () => {},
+  favouritesCats: [],
+  setFavouritesCats: () => {},
+  removeCatFromFavourites: () => {},
+});
 
 export const useCatsContext = () => {
   return useContext(CatsContext);
@@ -21,12 +30,20 @@ export const CatsContextProvider = ({ children }: React.PropsWithChildren) => {
   const [catsData, setCatsData] = useState<Cat[]>([]);
   const [favouritesCats, setFavouritesCats] = useState<Cat[]>([]);
 
-  const removeFromFavourites = (catID: string) => {
+  const removeCatFromFavourites = (catID: string) => {
     setFavouritesCats(favouritesCats.filter((cat) => cat.id !== catID));
   };
 
   return (
-    <CatsContext.Provider value={{ catsData, setCatsData }}>
+    <CatsContext.Provider
+      value={{
+        catsData,
+        setCatsData,
+        favouritesCats,
+        setFavouritesCats,
+        removeCatFromFavourites,
+      }}
+    >
       {children}
     </CatsContext.Provider>
   );
